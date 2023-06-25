@@ -7,7 +7,7 @@ Proceso trabajofinal
 	definir opcion5 Como Caracter
 	definir usuario Como Caracter //Array que contiene los datos del usuario
 	
-	
+	// Este es diferente
 	//Almacenar nombre de las vacunas
 	dimension vacunas[6,1]
 	vacunas[0,0]="Neumococo conjugada"
