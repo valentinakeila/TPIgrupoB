@@ -123,14 +123,11 @@ Proceso trabajofinal
 				verAgendaVacunatorio(usuario,tamaño)
 				Escribir ""
 				
-			4: leer opcion4
-				Segun opcion4 Hacer
+			4:  Escribir ""
+				ordenar(usuario,tamaño)
+				Escribir ""
 					
-					a: 
-						
-					b: 
-						
-				Fin Segun
+			
 				
 			5: leer opcion5
 				Segun opcion5 Hacer
@@ -171,9 +168,9 @@ SubProceso reservarTurno(vacunas Por Referencia ,turnos Por Referencia ,usuario 
 		
 		Para i <- 0 Hasta tamaño Con Paso 1 Hacer
 			
-				Si dniIngresado == usuario[i,1] Entonces
-					bandera = 1;
-				Fin Si
+			Si dniIngresado == usuario[i,1] Entonces
+				bandera = 1;
+			Fin Si
 			
 		Fin Para
 		
@@ -393,26 +390,26 @@ Si bandera2 <> 6 Entonces
 	
 	
 	
-		Para i <- 0 Hasta 2 Con Paso 1 Hacer
-			Si usuario[i,6] <> "Ocupado" Entonces
-				usuario[i,0] = nombreIngresado
-				usuario[i,1] = dniIngresado
-				usuario[i,2] = edadIngresada
-				usuario[i,3] = ConvertirATexto(vacunaElegida)
-				usuario[i,4] = ConvertirATexto(opcionDia)
-				usuario[i,5] = ConvertirATexto(opcionHorario)
-				usuario[i,6] = "Ocupado"
-				
-				i = 3
-				
-			SiNo
-				
-			Fin Si
+	Para i <- 0 Hasta 2 Con Paso 1 Hacer
+		Si usuario[i,6] <> "Ocupado" Entonces
+			usuario[i,0] = nombreIngresado
+			usuario[i,1] = dniIngresado
+			usuario[i,2] = edadIngresada
+			usuario[i,3] = ConvertirATexto(vacunaElegida)
+			usuario[i,4] = ConvertirATexto(opcionDia)
+			usuario[i,5] = ConvertirATexto(opcionHorario)
+			usuario[i,6] = "Ocupado"
 			
-		Fin Para
+			i = 3
+			
+		SiNo
+			
+		Fin Si
+		
+	Fin Para
 	
-		
-		
+	
+	
 	
 SiNo
 	Escribir "Se acabo el stock de las vacunas"
@@ -518,7 +515,7 @@ SubProceso buscarPaciente(usuario,tamaño)
 			Fin Para
 		FinSi
 	Fin Para
-
+	
 	
 	
 	
@@ -534,66 +531,120 @@ SubProceso verAgendaVacunatorio(usuario,tamaño)
 	Para i<-0 Hasta tamaño - 1 Con Paso 1 Hacer
 		
 		
-			Para j<-0 Hasta 6 Con Paso 1 Hacer
-				
-				Si usuario[i,6] == "Ocupado" Entonces
-					Segun j Hacer
-							
-						4:
-							Escribir "Dia: " Sin Saltar
-							Segun ConvertirANumero(usuario[i,j]) Hacer
-								1:
-									Escribir "Lunes"
-								2:
-									Escribir "Martes"
-								3:
-									Escribir "Miercoles"
-								4:
-									Escribir "Jueves"
-								5:
-									Escribir "Viernes"
-								De Otro Modo:
-									
-							Fin Segun
-						5:
-							Escribir "Hora: " Sin Saltar
-							Segun ConvertirANumero(usuario[i,j]) Hacer
-								0:
-									Escribir "8:00"
-								1:
-									Escribir "8:30"
-								2:
-									Escribir "9:00"
-								3:
-									Escribir "9:30"
-								4:
-									Escribir "10:00"
-								5:
-									Escribir "10:30"
-								6:
-									Escribir "11:00"
-								7:
-									Escribir "11:30"
-								De Otro Modo:
-									
-							Fin Segun
-						6: 
-							Escribir usuario[i,j]
-						De Otro Modo:
-						
-					Fin Segun
-					
+		Para j<-0 Hasta 6 Con Paso 1 Hacer
 			
-				Fin Si
+			Si usuario[i,6] == "Ocupado" Entonces
+				Segun j Hacer
+					
+					4:
+						Escribir "Dia: " Sin Saltar
+						Segun ConvertirANumero(usuario[i,j]) Hacer
+							1:
+								Escribir "Lunes"
+							2:
+								Escribir "Martes"
+							3:
+								Escribir "Miercoles"
+							4:
+								Escribir "Jueves"
+							5:
+								Escribir "Viernes"
+							De Otro Modo:
+								
+						Fin Segun
+					5:
+						Escribir "Hora: " Sin Saltar
+						Segun ConvertirANumero(usuario[i,j]) Hacer
+							0:
+								Escribir "8:00"
+							1:
+								Escribir "8:30"
+							2:
+								Escribir "9:00"
+							3:
+								Escribir "9:30"
+							4:
+								Escribir "10:00"
+							5:
+								Escribir "10:30"
+							6:
+								Escribir "11:00"
+							7:
+								Escribir "11:30"
+							De Otro Modo:
+								
+						Fin Segun
+					6: 
+						Escribir usuario[i,j]
+					De Otro Modo:
+						
+				Fin Segun
 				
 				
-				
-			Fin Para
+			Fin Si
+			
+			
+			
+		Fin Para
 		
 	Fin Para
 	
 	
+FinSubProceso
+
+SubProceso ordenar(usuario,tamaño)
 	
+	Escribir "Seleccione el tipo de ordenamiento: (a- Por edad , b- Por vacuna aplicada)"
+	leer opcion4
 	
+	Segun opcion4 Hacer
+		"a":
+			Para i<-0 Hasta tamaño -2 Con Paso 1 Hacer
+				Para j<-i+1 Hasta tamaño -1 Con paso 1 Hacer
+					
+					si ConvertirANumero(usuario[i,2]) > ConvertirANumero(usuario[j,2]) Entonces
+						
+				
+					
+					Para k<-0 Hasta 7-1 Con Paso 1 Hacer
+					
+						aux<-usuario[i,k]
+						usuario[i,k]<-usuario[j,k]
+						usuario[j,k]<-aux
+						
+					Fin Para
+				FinSi
+			Fin Para
+		Fin Para
+		
+	
+		"b":
+			Para i<-0 Hasta tamaño -2 Con Paso 1 Hacer
+				Para j<-i+1 Hasta tamaño -1 Con paso 1 Hacer
+					
+					
+					si ConvertirANumero(usuario[i,3]) > ConvertirANumero(usuario[j,3]) Entonces
+						
+						
+						Para k<-0 Hasta 7-1 Con Paso 1 Hacer
+							
+							aux<-usuario[i,k]
+							usuario[i,k]<-usuario[j,k]
+							usuario[j,k]<-aux
+						Fin Para
+					FinSi
+				Fin Para
+			Fin Para
+		
+	Fin Segun
+	
+	Para i<-0 Hasta tamaño-1 Con Paso 1 Hacer
+		Para j<-0 Hasta 5 Con Paso 1 Hacer
+			Escribir usuario[i,j]  
+			
+		Fin Para
+	Fin Para
 	
 FinSubProceso
+
+
