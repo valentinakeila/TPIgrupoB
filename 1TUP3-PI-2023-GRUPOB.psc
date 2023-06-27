@@ -1,106 +1,17 @@
 Proceso trabajofinal
-	Escribir "Bienvenido"
-	definir vacunas Como Caracter
-	definir turnos Como Caracter
+	Escribir "Bienvenido" // Mensajito de bienvenida :)
+	
+	baseDeDatos() // Se cargan las variables y sus datos
+	
+	//Menù principal de opciones
 	Definir eleccion Como Entero
-	Definir opcion4 Como Caracter
-	definir opcion5 Como Caracter
-	definir usuario Como Caracter //Array que contiene los datos del usuario
-	Definir cantidadTurnos Como Entero
-	cantidadTurnos = 0
-	
-	Definir tamaño Como Entero
-	tamaño = 3
-	
-	Dimension usuario[tamaño,7]
-
-	//Almacenar nombre de las vacunas
-	dimension vacunas[6,2]
-	vacunas[0,0]="Neumococo conjugada"
-	vacunas[1,0]="Poliomielitis (IPV o Salk)"
-	vacunas[2,0]="Quíntuple (o pentavalente)"
-	vacunas[3,0]="Rotavirus"
-	vacunas[4,0]="Meningococo"
-	vacunas[5,0]="Tripe Viral"
-	
-	//Stock disponible de las vacunas 
-	vacunas[0,1]="10"
-	vacunas[1,1]="10"
-	vacunas[2,1]="10"
-	vacunas[3,1]="10"
-	vacunas[4,1]="10"
-	vacunas[5,1]="10"
-	
-	//Turnos disponibles a elegir 
-	
-	dimension turnos[5,9]
-	turnos[0,0]= "Lunes"
-	turnos[1,0]= "Martes"
-	turnos[2,0]= "Miercoles"
-	turnos[3,0]= "Jueves"
-	turnos[4,0]= "Viernes"
-	
-	turnos[0,1]= "8:00"
-	turnos[1,1]= "8:00"
-	turnos[2,1]= "8:00"
-	turnos[3,1]= "8:00"
-	turnos[4,1]= "8:00"
-	
-	turnos[0,2]= "8:30"
-	turnos[1,2]= "8:30"
-	turnos[2,2]= "8:30"
-	turnos[3,2]= "8:30"
-	turnos[4,2]= "8:30"
-	
-	turnos[0,3]= "9:00"
-	turnos[1,3]= "9:00"
-	turnos[2,3]= "9:00"
-	turnos[3,3]= "9:00"
-	turnos[4,3]= "9:00"
-	
-	turnos[0,4]= "9:30"
-	turnos[1,4]= "9:30"
-	turnos[2,4]= "9:30"
-	turnos[3,4]= "9:30"
-	turnos[4,4]= "9:30"
-	
-	turnos[0,5]= "10:00"
-	turnos[1,5]= "10:00"
-	turnos[2,5]= "10:00"
-	turnos[3,5]= "10:00"
-	turnos[4,5]= "10:00"
-	
-	turnos[0,6]= "10:30"
-	turnos[1,6]= "10:30"
-	turnos[2,6]= "10:30"
-	turnos[3,6]= "10:30"
-	turnos[4,6]= "10:30"
-	
-	turnos[0,7]= "11:00"
-	turnos[1,7]= "11:00"
-	turnos[2,7]= "11:00"
-	turnos[3,7]= "11:00"
-	turnos[4,7]= "11:00"
-	
-	turnos[0,8]= "11:30"
-	turnos[1,8]= "11:30"
-	turnos[2,8]= "11:30"
-	turnos[3,8]= "11:30"
-	turnos[4,8]= "11:30"
-	
-	
-	
-	
-	
-	//Menù de opciones 
-	
 	Repetir
-		Escribir "elija una opcion"
-		Escribir "1-reservar turno"  
+		Escribir "Elija una opcion"
+		Escribir "1-Reservar turno"  
 		Escribir "2-Buscar paciente"
 		Escribir "3-Ver agenda vacunatorio"
-		escribir "4-Ordenar y mostrar lista pacientes (A- Por edad, B- Por vacuna a aplicar)"
-		escribir "5-Listado/s (A- Cantidad turnos otorgados por día, B- Cantidad de vacunas a aplicar por vacuna) "
+		escribir "4-Ordenar y mostrar lista pacientes"
+		escribir "5-Listado/s"
 		escribir "6-Salir"
 		
 		leer eleccion 
@@ -109,7 +20,7 @@ Proceso trabajofinal
 			1:  
 				
 				Escribir ""
-				reservarTurno(vacunas,turnos,usuario)
+				reservarTurno(vacunas,turnos,usuario,cantidadTurnos,cantidadVacunas)
 				Escribir ""
 				
 			2: 
@@ -130,14 +41,10 @@ Proceso trabajofinal
 				
 				
 				
-			5: leer opcion5
-				Segun opcion5 Hacer
-					a: 
-						
-					b: 
-						
-				Fin Segun
-				
+			5: 
+				listadoTurnos(cantidadTurnos,cantidadVacunas)
+			6: 
+				Escribir "Hasta pronto :)"
 				
 		Fin Segun
 	Hasta Que eleccion	== 6
@@ -146,21 +53,7 @@ Proceso trabajofinal
 	
 FinProceso
 
-SubProceso baseDeDatos()
-	
-	
-	
-	
-	
-	
-FinSubProceso
-
-
-
-
-
-
-SubProceso reservarTurno(vacunas Por Referencia ,turnos Por Referencia ,usuario Por Referencia, cantidadTurnos Por Referencia)
+SubProceso reservarTurno(vacunas Por Referencia ,turnos Por Referencia ,usuario Por Referencia, cantidadTurnos Por Referencia, cantidadVacunas)
 	Definir opcionDia Como Entero
 	Definir opcionHorario Como Entero
 	
@@ -243,15 +136,17 @@ SubProceso reservarTurno(vacunas Por Referencia ,turnos Por Referencia ,usuario 
 							Fin Si
 						Fin Para
 						
-						
+						cantidadTurnos[0,1] = ConvertirATexto(ConvertirANumero(cantidadTurnos[0,1]) + 1)
 						
 						
 						leer opcionHorario
 						Segun opcionHorario Hacer
 							1:
 								turnos[0,1] = "Ocupado"
+								
 							2:
 								turnos[0,2] = "Ocupado"
+								
 							3:
 								turnos[0,3] = "Ocupado"
 							4:
@@ -275,6 +170,8 @@ SubProceso reservarTurno(vacunas Por Referencia ,turnos Por Referencia ,usuario 
 							Escribir i "- " turnos[1,i]
 						Fin Si
 					Fin Para
+					
+					cantidadTurnos[1,1] = ConvertirATexto(ConvertirANumero(cantidadTurnos[1,1]) + 1)
 					
 					leer opcionHorario
 					Segun opcionHorario Hacer
@@ -308,6 +205,8 @@ SubProceso reservarTurno(vacunas Por Referencia ,turnos Por Referencia ,usuario 
 					Fin Si
 				Fin Para
 				
+				cantidadTurnos[2,1] = ConvertirATexto(ConvertirANumero(cantidadTurnos[2,1]) + 1)
+				
 				leer opcionHorario
 				Segun opcionHorario Hacer
 					1:
@@ -338,6 +237,8 @@ SubProceso reservarTurno(vacunas Por Referencia ,turnos Por Referencia ,usuario 
 				Fin Si
 			Fin Para
 			
+			cantidadTurnos[3,1] = ConvertirATexto(ConvertirANumero(cantidadTurnos[3,1]) + 1)
+			
 			leer opcionHorario
 			Segun opcionHorario Hacer
 				1:
@@ -367,6 +268,8 @@ SubProceso reservarTurno(vacunas Por Referencia ,turnos Por Referencia ,usuario 
 					Escribir i "- " turnos[4,i]
 				Fin Si
 			Fin Para
+			
+			cantidadTurnos[4,1] = ConvertirATexto(ConvertirANumero(cantidadTurnos[4,1]) + 1)
 			
 			leer opcionHorario
 			Segun opcionHorario Hacer
@@ -425,16 +328,22 @@ Si bandera2 <> 6 Entonces
 		Segun vacunaElegida Hacer
 			1:
 				vacunas[0,1] = ConvertirATexto(ConvertirANumero(vacunas[0,1]) - 1)
+				cantidadVacunas[0,1] = ConvertirATexto(ConvertirANumero(cantidadVacunas[0,1]) + 1)
 			2:
 				vacunas[1,1] = ConvertirATexto(ConvertirANumero(vacunas[0,1]) - 1)
+				cantidadVacunas[1,1] = ConvertirATexto(ConvertirANumero(cantidadVacunas[1,1]) + 1)
 			3:
 				vacunas[2,1] = ConvertirATexto(ConvertirANumero(vacunas[0,1]) - 1)
+				cantidadVacunas[2,1] = ConvertirATexto(ConvertirANumero(cantidadVacunas[2,1]) + 1)
 			4:
 				vacunas[3,1] = ConvertirATexto(ConvertirANumero(vacunas[0,1]) - 1)
+				cantidadVacunas[3,1] = ConvertirATexto(ConvertirANumero(cantidadVacunas[3,1]) + 1)
 			5:
 				vacunas[4,1] = ConvertirATexto(ConvertirANumero(vacunas[0,1]) - 1)
+				cantidadVacunas[4,1] = ConvertirATexto(ConvertirANumero(cantidadVacunas[4,1]) + 1)	
 			6:
 				vacunas[5,1] = ConvertirATexto(ConvertirANumero(vacunas[0,1]) - 1)
+				cantidadVacunas[5,1] = ConvertirATexto(ConvertirANumero(cantidadVacunas[5,1]) + 1)
 			De Otro Modo:
 				
 		Fin Segun
@@ -459,8 +368,75 @@ Si bandera2 <> 6 Entonces
 			usuario[i,5] = ConvertirATexto(opcionHorario)
 			usuario[i,6] = "Ocupado"
 			
-			i = 3
-			cantidadTurnos = cantidadTurnos + 1
+			
+			
+			
+					Escribir "Nombre: " usuario[i,0]
+					Escribir "DNI: " usuario[i,1]
+					Escribir "Edad: " usuario[i,2]
+					
+					Escribir "Vacuna: " Sin Saltar
+					Segun ConvertirANumero(usuario[i,3]) Hacer
+						1:
+							Escribir "Neumococo conjugada"
+						2:
+							Escribir "Poliomielitis (IPV o Salk)"
+						3:
+							Escribir "Quíntuple (o pentavalente)"
+						4:
+							Escribir "Rotavirus"
+						5:
+							Escribir "Meningococo"
+						6:
+							Escribir "Tripe Viral"
+						De Otro Modo:
+							
+					FinSegun
+					
+					Escribir "Dia: " Sin Saltar
+					
+					Segun ConvertirANumero(usuario[i,4]) Hacer
+						1:
+							Escribir "Lunes"
+						2:
+							Escribir "Martes"
+						3:
+							Escribir "Miercoles"
+						4:
+							Escribir "Jueves"
+						5:
+							Escribir "Viernes"
+						De Otro Modo:
+							
+					Fin Segun
+					
+					Escribir "Horario: " Sin Saltar
+					
+					Segun ConvertirANumero(usuario[i,5]) Hacer
+						1:
+							Escribir "8:00"
+						2:
+							Escribir "8:30" 
+						3:
+							Escribir "9:00"
+						4:
+							Escribir "9:30"
+						5:
+							Escribir "10:00"
+						6:
+							Escribir "10:30"
+						7:
+							Escribir "11:00"
+						8:
+							Escribir "11:30"
+						De Otro Modo:
+							
+							
+							
+					Fin Segun
+				i = 3
+			
+			
 		SiNo
 			
 		Fin Si
@@ -671,7 +647,7 @@ SubProceso ordenar(usuario,tamaño)
 	
 	
 	
-	Segun opcion4 Hacer
+	Segun Minusculas(opcion4) Hacer
 		"a":
 			Para i<-0 Hasta tamaño -2 Con Paso 1 Hacer
 				Para j<-i+1 Hasta tamaño -1 Con paso 1 Hacer
@@ -721,13 +697,162 @@ SubProceso ordenar(usuario,tamaño)
 	
 FinSubProceso
 
-SubProceso listadoTurnos(cantidadTurnos)
+SubProceso listadoTurnos(cantidadTurnos,cantidadVacunas)
 	
-	Escribir "La cantidad de turnos", cantidadTurnos
+	Definir opcion1 Como Caracter
+	
+	Escribir "A- Cantidad turnos otorgados por día, B- Cantidad de vacunas a aplicar por día"
+	
+	
+	
+	Repetir
+		Escribir "Seleccione el tipo de ordenamiento: (a- Por edad , b- Por vacuna aplicada)"
+		leer opcion1
+		
+		Si opcion1 <> "a" y opcion1 <> "b" Entonces
+			Escribir "Opción no válida."
+		Fin Si 
+		
+	Hasta Que opcion1 = "a" o opcion1 = "b"
+	
+	Segun Minusculas(opcion1) Hacer
+		"a":
+			Escribir "Lista de turnos por día"
+			Para i <- 0 Hasta 4 Con Paso 1 Hacer
+				Para j <- 0 Hasta 1 Con Paso 1 Hacer
+					
+					Escribir cantidadTurnos[i,j] Sin Saltar
+					Escribir " " Sin Saltar
+				Fin Para
+				Escribir ""
+			Fin Para
+			Escribir ""
+			
+		"b":
+			Escribir "Cantidad de vacunas por cada vacuna"
+			Para i <- 0 Hasta 5 Con Paso 1 Hacer
+				Para j <- 0 Hasta 1 Con Paso 1 Hacer
+					
+					Escribir cantidadVacunas[i,j] Sin Saltar
+					Escribir " " Sin Saltar
+				Fin Para
+				Escribir ""
+			Fin Para
+			Escribir ""
+		De Otro Modo:
+			Escribir "Ingrese nuevamente la opcion"
+	Fin Segun
 	
 	
 FinSubProceso
 
-
+SubProceso baseDeDatos()
+	
+	definir vacunas Como Caracter
+	definir turnos Como Caracter
+	Definir opcion4 Como Caracter
+	definir opcion5 Como Caracter
+	definir usuario Como Caracter //Array que contiene los datos del usuario
+	
+	Definir cantidadTurnos Como Caracter
+	Dimension cantidadTurnos[5,2]
+	Definir cantidadVacunas Como Caracter
+	Dimension cantidadVacunas[6,2]
+	
+	
+	
+	Definir tamaño Como Entero
+	tamaño = 3
+	
+	Dimension usuario[tamaño,7]
+	
+	cantidadTurnos[0,0]= "Lunes"
+	cantidadTurnos[1,0]= "Martes"
+	cantidadTurnos[2,0]= "Miercoles"
+	cantidadTurnos[3,0]= "Jueves"
+	cantidadTurnos[4,0]= "Viernes"
+	
+	cantidadVacunas[0,0]="Neumococo conjugada"
+	cantidadVacunas[1,0]="Poliomielitis (IPV o Salk)"
+	cantidadVacunas[2,0]="Quíntuple (o pentavalente)"
+	cantidadVacunas[3,0]="Rotavirus"
+	cantidadVacunas[4,0]="Meningococo"
+	cantidadVacunas[5,0]="Tripe Viral"
+	
+	//Almacenar nombre de las vacunas
+	dimension vacunas[6,2]
+	vacunas[0,0]="Neumococo conjugada"
+	vacunas[1,0]="Poliomielitis (IPV o Salk)"
+	vacunas[2,0]="Quíntuple (o pentavalente)"
+	vacunas[3,0]="Rotavirus"
+	vacunas[4,0]="Meningococo"
+	vacunas[5,0]="Tripe Viral"
+	
+	//Stock disponible de las vacunas 
+	vacunas[0,1]="10"
+	vacunas[1,1]="10"
+	vacunas[2,1]="10"
+	vacunas[3,1]="10"
+	vacunas[4,1]="10"
+	vacunas[5,1]="10"
+	
+	//Turnos disponibles a elegir 
+	
+	dimension turnos[5,9]
+	turnos[0,0]= "Lunes"
+	turnos[1,0]= "Martes"
+	turnos[2,0]= "Miercoles"
+	turnos[3,0]= "Jueves"
+	turnos[4,0]= "Viernes"
+	
+	turnos[0,1]= "8:00"
+	turnos[1,1]= "8:00"
+	turnos[2,1]= "8:00"
+	turnos[3,1]= "8:00"
+	turnos[4,1]= "8:00"
+	
+	turnos[0,2]= "8:30"
+	turnos[1,2]= "8:30"
+	turnos[2,2]= "8:30"
+	turnos[3,2]= "8:30"
+	turnos[4,2]= "8:30"
+	
+	turnos[0,3]= "9:00"
+	turnos[1,3]= "9:00"
+	turnos[2,3]= "9:00"
+	turnos[3,3]= "9:00"
+	turnos[4,3]= "9:00"
+	
+	turnos[0,4]= "9:30"
+	turnos[1,4]= "9:30"
+	turnos[2,4]= "9:30"
+	turnos[3,4]= "9:30"
+	turnos[4,4]= "9:30"
+	
+	turnos[0,5]= "10:00"
+	turnos[1,5]= "10:00"
+	turnos[2,5]= "10:00"
+	turnos[3,5]= "10:00"
+	turnos[4,5]= "10:00"
+	
+	turnos[0,6]= "10:30"
+	turnos[1,6]= "10:30"
+	turnos[2,6]= "10:30"
+	turnos[3,6]= "10:30"
+	turnos[4,6]= "10:30"
+	
+	turnos[0,7]= "11:00"
+	turnos[1,7]= "11:00"
+	turnos[2,7]= "11:00"
+	turnos[3,7]= "11:00"
+	turnos[4,7]= "11:00"
+	
+	turnos[0,8]= "11:30"
+	turnos[1,8]= "11:30"
+	turnos[2,8]= "11:30"
+	turnos[3,8]= "11:30"
+	turnos[4,8]= "11:30"
+	
+FinSubProceso
 
 
