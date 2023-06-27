@@ -6,13 +6,14 @@ Proceso trabajofinal
 	Definir opcion4 Como Caracter
 	definir opcion5 Como Caracter
 	definir usuario Como Caracter //Array que contiene los datos del usuario
+	Definir cantidadTurnos Como Entero
+	cantidadTurnos = 0
 	
 	Definir tamaño Como Entero
 	tamaño = 3
 	
 	Dimension usuario[tamaño,7]
-	
-	
+
 	//Almacenar nombre de las vacunas
 	dimension vacunas[6,2]
 	vacunas[0,0]="Neumococo conjugada"
@@ -126,8 +127,8 @@ Proceso trabajofinal
 			4:  Escribir ""
 				ordenar(usuario,tamaño)
 				Escribir ""
-					
-			
+				
+				
 				
 			5: leer opcion5
 				Segun opcion5 Hacer
@@ -145,26 +146,51 @@ Proceso trabajofinal
 	
 FinProceso
 
-SubProceso reservarTurno(vacunas Por Referencia ,turnos Por Referencia ,usuario Por Referencia)
+SubProceso baseDeDatos()
+	
+	
+	
+	
+	
+	
+FinSubProceso
+
+
+
+
+
+
+SubProceso reservarTurno(vacunas Por Referencia ,turnos Por Referencia ,usuario Por Referencia, cantidadTurnos Por Referencia)
 	Definir opcionDia Como Entero
 	Definir opcionHorario Como Entero
 	
 	Definir nombreIngresado Como Caracter
 	Definir dniIngresado Como Caracter
-	Definir edadIngresada Como Caracter
+	Definir edadIngresada Como real
 	Definir vacunaElegida Como Entero
 	Definir bandera Como Entero
 	bandera = 0;
 	
 	Repetir
 		
+		Repetir
+			Escribir "Bienvenido, Ingrese su Nombre y Apellido:"
+			Leer nombreIngresado
+			Si  Longitud(nombreIngresado) < 3 Entonces
+				Escribir "Ingrese su nombre y apellido nuevamente:"
+			Fin Si
+			
+		Hasta Que Longitud(nombreIngresado) > 3
 		
+		Repetir
+			Escribir "Ingrese su DNI"
+			Leer dniIngresado
+			
+			Si Longitud(dniIngresado) < 6 o Longitud(dniIngresado) > 8 Entonces
+				Escribir "DNI inválido. Ingrese el DNI nuevamente:"
+			Fin Si
+		Hasta Que Longitud(dniIngresado) >= 6 y Longitud(dniIngresado) <= 8
 		
-		Escribir "Bienvenido, Ingrese su Nombre y Apellido"
-		Leer nombreIngresado
-		
-		Escribir "Ingrese su DNI"
-		Leer dniIngresado
 		
 		Para i <- 0 Hasta tamaño Con Paso 1 Hacer
 			
@@ -180,178 +206,201 @@ SubProceso reservarTurno(vacunas Por Referencia ,turnos Por Referencia ,usuario 
 			
 		SiNo
 			
+			Repetir
+				Escribir "Ingrese su edad (0.X Para meses de vida)"
+				Leer edadIngresada
+				Si edadIngresada <= 0.1 Entonces
+					Escribir "Estas vacunas no pueden aplicarse antes de los 2 meses según el Calendario de Vacunación Argentino. De haberse equivocado ingrese la edad de nuevo."
+				Fin Si
+			Hasta Que edadIngresada >= 0.1 //Estas vacunas no pueden aplicarse antes de los 2 meses
 			
-			Escribir "Ingrese su edad (0.X Para meses de vida)"
-			Leer edadIngresada
+			
+			Repetir
+				Escribir "Seleccione dìa para reservar su turno"
+				Escribir "1-Lunes"
+				Escribir "2-Martes"
+				Escribir "3-Mièrcoles"
+				Escribir "4-Jueves"
+				Escribir "5-Viernes"
+				
+				leer opcionDia
+				Si opcionDia < 0 o opcionDia > 5 Entonces
+					Escribir "Opción no válida."
+				Fin Si
+				
+			Hasta Que opcionDia > 0 y opcionDia < 5
 			
 			
-			Escribir "Seleccione dìa para reservar su turno"
-			Escribir "1-Lunes"
-			Escribir "2-Martes"
-			Escribir "3-Mièrcoles"
-			Escribir "4-Jueves"
-			Escribir "5-Viernes"
 			
-			leer opcionDia
-			
-			Segun opcionDia Hacer
-				1: 
-					Para i<-1 Hasta 8 Con Paso 1 Hacer
+			Repetir
+				
+				Segun opcionDia Hacer
+					1: 
+						Para i<-1 Hasta 8 Con Paso 1 Hacer
+							
+							Si turnos[0,i] <> "Ocupado" Entonces
+								Escribir i "- " turnos[0,i]
+							Fin Si
+						Fin Para
 						
-						Si turnos[0,i] <> "Ocupado" Entonces
-							Escribir i "- " turnos[0,i]
+						
+						
+						
+						leer opcionHorario
+						Segun opcionHorario Hacer
+							1:
+								turnos[0,1] = "Ocupado"
+							2:
+								turnos[0,2] = "Ocupado"
+							3:
+								turnos[0,3] = "Ocupado"
+							4:
+								turnos[0,4] = "Ocupado"
+							5:
+								turnos[0,5] = "Ocupado"
+							6:
+								turnos[0,6] = "Ocupado"
+							7:
+								turnos[0,7] = "Ocupado"
+							8:
+								turnos[0,8] = "Ocupado"
+								
+							De Otro Modo:
+								
+						Fin Segun
+						
+					2:Para i<-1 Hasta 8 Con Paso 1 Hacer
+						
+						Si turnos[1,i] <> "Ocupado" Entonces
+							Escribir i "- " turnos[1,i]
 						Fin Si
 					Fin Para
 					
 					leer opcionHorario
 					Segun opcionHorario Hacer
 						1:
-							turnos[0,1] = "Ocupado"
+							turnos[1,1] = "Ocupado"
 						2:
-							turnos[0,2] = "Ocupado"
+							turnos[1,2] = "Ocupado"
 						3:
-							turnos[0,3] = "Ocupado"
+							turnos[1,3] = "Ocupado"
 						4:
-							turnos[0,4] = "Ocupado"
+							turnos[1,4] = "Ocupado"
 						5:
-							turnos[0,5] = "Ocupado"
+							turnos[1,5] = "Ocupado"
 						6:
-							turnos[0,6] = "Ocupado"
+							turnos[1,6] = "Ocupado"
 						7:
-							turnos[0,7] = "Ocupado"
+							turnos[1,7] = "Ocupado"
 						8:
-							turnos[0,8] = "Ocupado"
+							turnos[1,8] = "Ocupado"
 							
 						De Otro Modo:
 							
 					Fin Segun
 					
-				2:Para i<-1 Hasta 8 Con Paso 1 Hacer
 					
-					Si turnos[1,i] <> "Ocupado" Entonces
-						Escribir i "- " turnos[1,i]
+					
+				3:Para i<-1 Hasta 8 Con Paso 1 Hacer
+					
+					Si turnos[2,i] <> "Ocupado" Entonces
+						Escribir i "- " turnos[2,i]
 					Fin Si
 				Fin Para
 				
 				leer opcionHorario
 				Segun opcionHorario Hacer
 					1:
-						turnos[1,1] = "Ocupado"
+						turnos[2,1] = "Ocupado"
 					2:
-						turnos[1,2] = "Ocupado"
+						turnos[2,2] = "Ocupado"
 					3:
-						turnos[1,3] = "Ocupado"
+						turnos[2,3] = "Ocupado"
 					4:
-						turnos[1,4] = "Ocupado"
+						turnos[2,4] = "Ocupado"
 					5:
-						turnos[1,5] = "Ocupado"
+						turnos[2,5] = "Ocupado"
 					6:
-						turnos[1,6] = "Ocupado"
+						turnos[2,6] = "Ocupado"
 					7:
-						turnos[1,7] = "Ocupado"
+						turnos[2,7] = "Ocupado"
 					8:
-						turnos[1,8] = "Ocupado"
+						turnos[2,8] = "Ocupado"
 						
 					De Otro Modo:
 						
 				Fin Segun
 				
+			4:Para i<-1 Hasta 8 Con Paso 1 Hacer
 				
-				
-			3:Para i<-1 Hasta 8 Con Paso 1 Hacer
-				
-				Si turnos[2,i] <> "Ocupado" Entonces
-					Escribir i "- " turnos[2,i]
+				Si turnos[3,i] <> "Ocupado" Entonces
+					Escribir i "- " turnos[3,i]
 				Fin Si
 			Fin Para
 			
 			leer opcionHorario
 			Segun opcionHorario Hacer
 				1:
-					turnos[2,1] = "Ocupado"
+					turnos[3,1] = "Ocupado"
 				2:
-					turnos[2,2] = "Ocupado"
+					turnos[3,2] = "Ocupado"
 				3:
-					turnos[2,3] = "Ocupado"
+					turnos[3,3] = "Ocupado"
 				4:
-					turnos[2,4] = "Ocupado"
+					turnos[3,4] = "Ocupado"
 				5:
-					turnos[2,5] = "Ocupado"
+					turnos[3,5] = "Ocupado"
 				6:
-					turnos[2,6] = "Ocupado"
+					turnos[3,6] = "Ocupado"
 				7:
-					turnos[2,7] = "Ocupado"
+					turnos[3,7] = "Ocupado"
 				8:
-					turnos[2,8] = "Ocupado"
+					turnos[3,8] = "Ocupado"
 					
 				De Otro Modo:
 					
 			Fin Segun
 			
-		4:Para i<-1 Hasta 8 Con Paso 1 Hacer
+		5: Para i<-1 Hasta 8 Con Paso 1 Hacer
+				
+				Si turnos[4,i] <> "Ocupado" Entonces
+					Escribir i "- " turnos[4,i]
+				Fin Si
+			Fin Para
 			
-			Si turnos[3,i] <> "Ocupado" Entonces
-				Escribir i "- " turnos[3,i]
-			Fin Si
-		Fin Para
-		
-		leer opcionHorario
-		Segun opcionHorario Hacer
-			1:
-				turnos[3,1] = "Ocupado"
-			2:
-				turnos[3,2] = "Ocupado"
-			3:
-				turnos[3,3] = "Ocupado"
-			4:
-				turnos[3,4] = "Ocupado"
-			5:
-				turnos[3,5] = "Ocupado"
-			6:
-				turnos[3,6] = "Ocupado"
-			7:
-				turnos[3,7] = "Ocupado"
-			8:
-				turnos[3,8] = "Ocupado"
-				
-			De Otro Modo:
-				
-		Fin Segun
-		
-	5: Para i<-1 Hasta 8 Con Paso 1 Hacer
+			leer opcionHorario
+			Segun opcionHorario Hacer
+				1:
+					turnos[4,1] = "Ocupado"
+				2:
+					turnos[4,2] = "Ocupado"
+				3:
+					turnos[4,3] = "Ocupado"
+				4:
+					turnos[4,4] = "Ocupado"
+				5:
+					turnos[4,5] = "Ocupado"
+				6:
+					turnos[4,6] = "Ocupado"
+				7:
+					turnos[4,7] = "Ocupado"
+				8:
+					turnos[4,8] = "Ocupado"
+					
+				De Otro Modo:
+					
+			Fin Segun
 			
-			Si turnos[4,i] <> "Ocupado" Entonces
-				Escribir i "- " turnos[4,i]
-			Fin Si
-		Fin Para
-		
-		leer opcionHorario
-		Segun opcionHorario Hacer
-			1:
-				turnos[4,1] = "Ocupado"
-			2:
-				turnos[4,2] = "Ocupado"
-			3:
-				turnos[4,3] = "Ocupado"
-			4:
-				turnos[4,4] = "Ocupado"
-			5:
-				turnos[4,5] = "Ocupado"
-			6:
-				turnos[4,6] = "Ocupado"
-			7:
-				turnos[4,7] = "Ocupado"
-			8:
-				turnos[4,8] = "Ocupado"
-				
-			De Otro Modo:
-				
-		Fin Segun
-		
-		
-	De Otro Modo: Escribir "Opciòn Invàlida"
-		
-Fin Segun
+			
+		De Otro Modo: 
+			
+	Fin Segun
+	Si opcionHorario < 0 o opcionHorario > 8 Entonces
+		Escribir "Opción no válida."
+	Fin Si
+			Hasta Que opcionHorario > 0 y opcionHorario < 9
+			
+
 
 Escribir "Elija la vacuna a aplicar"
 
@@ -370,23 +419,33 @@ Fin Para
 
 Si bandera2 <> 6 Entonces
 	
-	Leer vacunaElegida
-	Segun vacunaElegida Hacer
-		1:
-			vacunas[0,1] = ConvertirATexto(ConvertirANumero(vacunas[0,1]) - 1)
-		2:
-			vacunas[1,1] = ConvertirATexto(ConvertirANumero(vacunas[0,1]) - 1)
-		3:
-			vacunas[2,1] = ConvertirATexto(ConvertirANumero(vacunas[0,1]) - 1)
-		4:
-			vacunas[3,1] = ConvertirATexto(ConvertirANumero(vacunas[0,1]) - 1)
-		5:
-			vacunas[4,1] = ConvertirATexto(ConvertirANumero(vacunas[0,1]) - 1)
-		6:
-			vacunas[5,1] = ConvertirATexto(ConvertirANumero(vacunas[0,1]) - 1)
-		De Otro Modo:
-			
-	Fin Segun
+	
+	Repetir
+		Leer vacunaElegida
+		Segun vacunaElegida Hacer
+			1:
+				vacunas[0,1] = ConvertirATexto(ConvertirANumero(vacunas[0,1]) - 1)
+			2:
+				vacunas[1,1] = ConvertirATexto(ConvertirANumero(vacunas[0,1]) - 1)
+			3:
+				vacunas[2,1] = ConvertirATexto(ConvertirANumero(vacunas[0,1]) - 1)
+			4:
+				vacunas[3,1] = ConvertirATexto(ConvertirANumero(vacunas[0,1]) - 1)
+			5:
+				vacunas[4,1] = ConvertirATexto(ConvertirANumero(vacunas[0,1]) - 1)
+			6:
+				vacunas[5,1] = ConvertirATexto(ConvertirANumero(vacunas[0,1]) - 1)
+			De Otro Modo:
+				
+		Fin Segun
+		
+		Si vacunaElegida < 0 o vacunaElegida > 6 Entonces
+			Escribir "Opción no válida."
+		Fin Si
+		
+	Hasta Que vacunaElegida > 0 y vacunaElegida < 7
+	
+	
 	
 	
 	
@@ -394,14 +453,14 @@ Si bandera2 <> 6 Entonces
 		Si usuario[i,6] <> "Ocupado" Entonces
 			usuario[i,0] = nombreIngresado
 			usuario[i,1] = dniIngresado
-			usuario[i,2] = edadIngresada
+			usuario[i,2] = ConvertirATexto(edadIngresada)
 			usuario[i,3] = ConvertirATexto(vacunaElegida)
 			usuario[i,4] = ConvertirATexto(opcionDia)
 			usuario[i,5] = ConvertirATexto(opcionHorario)
 			usuario[i,6] = "Ocupado"
 			
 			i = 3
-			
+			cantidadTurnos = cantidadTurnos + 1
 		SiNo
 			
 		Fin Si
@@ -416,10 +475,6 @@ SiNo
 Fin Si
 
 
-
-
-
-
 Fin Si
 
 
@@ -430,9 +485,18 @@ FinSubProceso
 
 SubProceso buscarPaciente(usuario,tamaño)
 	
+	Repetir
+		escribir "Ingrese el DNI del paciente:"
+		leer dni
+		
+		Si Longitud(dni) < 6 o Longitud(dni) > 8 Entonces
+			
+			Escribir "DNI inválido."
 	
-	escribir "ingrese el dni del cliente"
-	leer dni
+		Fin Si
+		
+	Hasta Que Longitud(dni) >= 6 y Longitud(dni) <= 8
+	
 	Definir vacuna Como Caracter
 	Definir dia Como Caracter
 	Definir hora Como Caracter
@@ -594,8 +658,18 @@ FinSubProceso
 
 SubProceso ordenar(usuario,tamaño)
 	
-	Escribir "Seleccione el tipo de ordenamiento: (a- Por edad , b- Por vacuna aplicada)"
-	leer opcion4
+	Repetir
+		Escribir "Seleccione el tipo de ordenamiento: (a- Por edad , b- Por vacuna aplicada)"
+		leer opcion4
+		
+		Si opcion4 <> "a" y opcion4 <> "b" Entonces
+		Escribir "Opción no válida."
+		Fin Si
+		
+		
+	Hasta Que opcion4 = "a" o opcion4 = "b"
+	
+	
 	
 	Segun opcion4 Hacer
 		"a":
@@ -604,20 +678,20 @@ SubProceso ordenar(usuario,tamaño)
 					
 					si ConvertirANumero(usuario[i,2]) > ConvertirANumero(usuario[j,2]) Entonces
 						
-				
-					
-					Para k<-0 Hasta 7-1 Con Paso 1 Hacer
-					
-						aux<-usuario[i,k]
-						usuario[i,k]<-usuario[j,k]
-						usuario[j,k]<-aux
 						
-					Fin Para
-				FinSi
+						
+						Para k<-0 Hasta 7-1 Con Paso 1 Hacer
+							
+							aux<-usuario[i,k]
+							usuario[i,k]<-usuario[j,k]
+							usuario[j,k]<-aux
+							
+						Fin Para
+					FinSi
+				Fin Para
 			Fin Para
-		Fin Para
-		
-	
+			
+			
 		"b":
 			Para i<-0 Hasta tamaño -2 Con Paso 1 Hacer
 				Para j<-i+1 Hasta tamaño -1 Con paso 1 Hacer
@@ -635,7 +709,7 @@ SubProceso ordenar(usuario,tamaño)
 					FinSi
 				Fin Para
 			Fin Para
-		
+			
 	Fin Segun
 	
 	Para i<-0 Hasta tamaño-1 Con Paso 1 Hacer
@@ -646,5 +720,14 @@ SubProceso ordenar(usuario,tamaño)
 	Fin Para
 	
 FinSubProceso
+
+SubProceso listadoTurnos(cantidadTurnos)
+	
+	Escribir "La cantidad de turnos", cantidadTurnos
+	
+	
+FinSubProceso
+
+
 
 
