@@ -201,10 +201,10 @@ SubProceso reservarTurno(vacunas ,turnos,usuario, cantidadTurnos, cantidadVacuna
 			Repetir //validar edad
 				Escribir "Ingrese la edad del paciente (0.X Para meses de vida)"
 				Leer edadIngresada
-				Si edadIngresada <= 0.1 Entonces 
-					Escribir "Estas vacunas no pueden aplicarse antes de los 2 meses según el Calendario de Vacunación Argentino. De haberse equivocado ingrese la edad de nuevo."
+				Si edadIngresada <= 0.1 o edadIngresada > 150 Entonces 
+					Escribir "Edad inválida. Recuerde que estas vacunas no pueden aplicarse antes de los 2 meses según el Calendario de Vacunación Argentino."
 				Fin Si
-			Hasta Que edadIngresada >= 0.1 //Estas vacunas no pueden aplicarse antes de los 2 meses
+			Hasta Que edadIngresada > 0.1 y edadIngresada < 150 //Estas vacunas no pueden aplicarse antes de los 2 meses
 			
 			//validacion de los turnos, seleccionar dia
 			Repetir
@@ -246,10 +246,8 @@ SubProceso reservarTurno(vacunas ,turnos,usuario, cantidadTurnos, cantidadVacuna
 						Segun opcionHorario Hacer // Si elije un turno, este pasa a estar "Ocupado" para que luego no aparezca en la seleccion
 							1:
 								turnos[0,1] = "Ocupado"
-								
 							2:
 								turnos[0,2] = "Ocupado"
-								
 							3:
 								turnos[0,3] = "Ocupado"
 							4:
@@ -469,7 +467,21 @@ Si bandera2 <> 6 Entonces // Si sigue habiendo stock de vacunas
 			usuario[i,0] = nombreIngresado
 			usuario[i,1] = dniIngresado
 			usuario[i,2] = ConvertirATexto(edadIngresada)
-			usuario[i,3] = ConvertirATexto(vacunaElegida)
+			Segun vacunaElegida Hacer
+				1:
+					usuario[i,3] = "Neumococo conjugada"
+				2:
+					usuario[i,3] = "Poliomielitis (IPV o Salk)"
+				3:
+					usuario[i,3] = "Quíntuple (o pentavalente)"
+				4:
+					usuario[i,3] = "Rotavirus"
+				5:
+					usuario[i,3] = "Meningococo"
+				6:
+					usuario[i,3] = "Tripe Viral"
+					
+			Fin Segun
 			usuario[i,4] = ConvertirATexto(opcionDia)
 			usuario[i,5] = ConvertirATexto(opcionHorario)
 			usuario[i,6] = "Ocupado" // Se ocupa ese puesto
@@ -480,24 +492,7 @@ Si bandera2 <> 6 Entonces // Si sigue habiendo stock de vacunas
 			Escribir "Nombre: " usuario[i,0]
 			Escribir "DNI: " usuario[i,1]
 			Escribir "Edad: " usuario[i,2]
-			Escribir "Vacuna: " Sin Saltar
-			Segun ConvertirANumero(usuario[i,3]) Hacer
-				1:
-					Escribir "Neumococo conjugada"
-				2:
-					Escribir "Poliomielitis (IPV o Salk)"
-				3:
-					Escribir "Quíntuple (o pentavalente)"
-				4:
-					Escribir "Rotavirus"
-				5:
-					Escribir "Meningococo"
-				6:
-					Escribir "Tripe Viral"
-				De Otro Modo:
-					
-			FinSegun
-			
+			Escribir "Vacuna: " usuario[i,3]
 			Escribir "Dia: " Sin Saltar
 			
 			Segun ConvertirANumero(usuario[i,4]) Hacer
@@ -739,7 +734,7 @@ SubProceso ordenar(usuario,tamaño)
 		"b": // ordenamiento por vacuna a aplicar
 			Para i<-0 Hasta tamaño -2 Con Paso 1 Hacer
 				Para j<-i+1 Hasta tamaño -1 Con paso 1 Hacer		
-					si ConvertirANumero(usuario[i,3]) > ConvertirANumero(usuario[j,3]) Entonces // Si la columna de la vacuna a aplicar es mayor alfabeticamente a la de la linea siguiente, se intercambian
+					si usuario[i,3] > usuario[j,3] Entonces // Si la columna de la vacuna a aplicar es mayor alfabeticamente a la de la linea siguiente, se intercambian
 						Para k<-0 Hasta 7-1 Con Paso 1 Hacer
 							aux<-usuario[i,k]
 							usuario[i,k]<-usuario[j,k]
@@ -751,13 +746,60 @@ SubProceso ordenar(usuario,tamaño)
 	Fin Segun
 	
 	// Se escriben los datos ordenados
-	Para i<-0 Hasta tamaño-1 Con Paso 1 Hacer
-		Para j<-0 Hasta 5 Con Paso 1 Hacer
-			Escribir usuario[i,j]  
-			
-		Fin Para
+	Para i<-0 Hasta tamaño - 1 Con Paso 1 Hacer // Se muestran los datos del usuario
+		
+			Para j<-0 Hasta 5 Con Paso 1 Hacer
+				
+				Segun j Hacer
+					0:
+						Escribir "Nombre: " usuario[i,j]
+					1:
+						Escribir "DNI: " usuario[i,j]
+					2:
+						Escribir "Edad: " usuario[i,j]
+					3:
+						Escribir "Vacuna: " usuario[i,j]
+						
+					4:
+						Escribir "Dia: " Sin Saltar
+						Segun ConvertirANumero(usuario[i,j]) Hacer// Segun el valor de la casilla del dia, se muestran uno u otro
+							1:
+								Escribir "Lunes"
+							2:
+								Escribir "Martes"
+							3:
+								Escribir "Miercoles"
+							4:
+								Escribir "Jueves"
+							5:
+								Escribir "Viernes"
+							De Otro Modo:
+								
+						Fin Segun
+					5:
+						Escribir "Hora: " Sin Saltar
+						Segun ConvertirANumero(usuario[i,j]) Hacer// Segun el valor de la casilla del turno, se muestran uno u otro
+							1:
+								Escribir "8:00"
+							2:
+								Escribir "8:30"
+							3:
+								Escribir "9:00"
+							4:
+								Escribir "9:30"
+							5:
+								Escribir "10:00"
+							6:
+								Escribir "10:30"
+							7:
+								Escribir "11:00"
+							8:
+								Escribir "11:30"
+						Fin Segun
+				Fin Segun
+			Fin Para
+			Escribir ""
 	Fin Para
-	
 FinSubProceso
 
 // Opcion 5
